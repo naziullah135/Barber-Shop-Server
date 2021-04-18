@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const MongoClient = require("mongodb").MongoClient;
+const { ObjectId } = require("bson");
 require("dotenv").config();
 
 const port = process.env.PORT || 5000;
@@ -35,6 +36,13 @@ client.connect((err) => {
 
   app.get("/services", (req, res) => {
     serviceCollection.find().toArray((err, services) => {
+      res.send(services);
+    });
+  });
+  
+  app.get("/service/:id", (req, res) => {
+    serviceCollection.find({_id:ObjectId(req.params.id)})
+    .toArray((err, services) => {
       res.send(services);
     });
   });
