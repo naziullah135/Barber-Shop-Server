@@ -41,9 +41,11 @@ client.connect((err) => {
   });
   
   app.get("/service/:id", (req, res) => {
+    console.log(req.params.id);
     serviceCollection.find({_id:ObjectId(req.params.id)})
     .toArray((err, services) => {
       res.send(services);
+      console.log(services);
     });
   });
 
