@@ -73,6 +73,12 @@ client.connect((err) => {
       res.send(result.insertedCount > 0);
     });
   });
+
+  app.get("/orders", (req, res) => {
+    orderCollection.find().toArray((err, newOrder) => {
+      res.send(newOrder);
+    });
+  });
   
 });
 
