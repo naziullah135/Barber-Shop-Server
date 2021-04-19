@@ -50,6 +50,13 @@ client.connect((err) => {
     });
   });
 
+  app.delete('/deleteService/:id',(req,res)=>{
+    serviceCollection.deleteOne({_id: ObjectId(req.params.id)})
+    .then(result => {
+      console.log(result);
+    })
+  })
+
   app.post("/addReview", (req, res) => {
     const review = req.body;
     console.log("add review", review);
