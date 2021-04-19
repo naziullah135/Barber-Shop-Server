@@ -24,6 +24,7 @@ client.connect((err) => {
   console.log(err);
   const serviceCollection = client.db("BarberShop").collection("services")
   const reviewCollection = client.db("BarberShop").collection("reviews")
+  const orderCollection = client.db("BarberShop").collection("orders")
 
   app.post("/addService", (req, res) => {
     const service = req.body;
@@ -61,6 +62,15 @@ client.connect((err) => {
   app.get("/reviews", (req, res) => {
     reviewCollection.find().toArray((err, review) => {
       res.send(review);
+    });
+  });
+
+  app.post("/orders", (req, res) => {
+    const newOrder = req.body;
+    console.log("add newOrder", newOrder);
+    orderCollection.insertOne(newOrder).then((result) => {
+      console.log("inserted count", result.insertedCount);
+      res.send(result.insertedCount > 0);
     });
   });
   
