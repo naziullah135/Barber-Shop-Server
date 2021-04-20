@@ -22,10 +22,10 @@ const client = new MongoClient(uri, {
 });
 client.connect((err) => {
   console.log(err);
-  const serviceCollection = client.db("BarberShop").collection("services")
-  const reviewCollection = client.db("BarberShop").collection("reviews")
-  const orderCollection = client.db("BarberShop").collection("orders")
-  const adminCollection = client.db("BarberShop").collection("admins")
+  const serviceCollection = client.db("BarberShop").collection("services");
+  const reviewCollection = client.db("BarberShop").collection("reviews");
+  const orderCollection = client.db("BarberShop").collection("orders");
+  const adminCollection = client.db("BarberShop").collection("admins");
 
   app.post("/addService", (req, res) => {
     const service = req.body;
@@ -41,22 +41,24 @@ client.connect((err) => {
       res.send(services);
     });
   });
-  
+
   app.get("/service/:id", (req, res) => {
     console.log(req.params.id);
-    serviceCollection.find({_id:ObjectId(req.params.id)})
-    .toArray((err, services) => {
-      res.send(services);
-      console.log(services);
-    });
+    serviceCollection
+      .find({ _id: ObjectId(req.params.id) })
+      .toArray((err, services) => {
+        res.send(services);
+        console.log(services);
+      });
   });
 
-  app.delete('/deleteService/:id',(req,res)=>{
-    serviceCollection.deleteOne({_id: ObjectId(req.params.id)})
-    .then(result => {
-      console.log(result);
-    })
-  })
+  app.delete("/deleteService/:id", (req, res) => {
+    serviceCollection
+      .deleteOne({ _id: ObjectId(req.params.id) })
+      .then((result) => {
+        console.log(result);
+      });
+  });
 
   app.post("/addReview", (req, res) => {
     const review = req.body;
@@ -89,12 +91,12 @@ client.connect((err) => {
   });
 
   app.post("/books", (req, res) => {
-    const newAdmin = req.body;
-    adminCollection.find(req.body)
-    .toArray((err, documents) =>{
-      res.send(documents)
-    })
+    console.log(req.body);
+    adminCollection.find(req.body).toArray((err, documents) => {
+      res.send(documents);
+    });
   });
+
   app.post("/admin", (req, res) => {
     const newAdmin = req.body;
     console.log("add newAdmin", newAdmin);
@@ -104,16 +106,13 @@ client.connect((err) => {
     });
   });
 
-  app.post('/isAdmin',(req,res) =>{
-    adminCollection.find(req.body)
-    .toArray((err, documents) =>{
-      res.send(documents.length> 0)
-    })
-  })
-  
+  app.post("/isAdmin", (req, res) => {
+    console.log(req.body);
+    adminCollection.find(req.body).toArray((err, documents) => {
+      res.send(documents.length > 0);
+    });
+  });
 });
-
-
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
