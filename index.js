@@ -92,7 +92,7 @@ client.connect((err) => {
 
   app.post("/books", (req, res) => {
     console.log(req.body);
-    adminCollection.find(req.body).toArray((err, documents) => {
+    orderCollection.find(req.body).toArray((err, documents) => {
       res.send(documents);
     });
   });
@@ -111,11 +111,6 @@ client.connect((err) => {
     adminCollection.find(req.body).toArray((err, documents) => {
       res.send(documents.length > 0);
     });
-  });
-});
-app.get("/list", (req, res) => {
-  orderCollection.find().toArray((err, newOrder) => {
-    res.send(newOrder);
   });
 });
 
