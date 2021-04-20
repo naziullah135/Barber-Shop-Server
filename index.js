@@ -25,6 +25,7 @@ client.connect((err) => {
   const serviceCollection = client.db("BarberShop").collection("services")
   const reviewCollection = client.db("BarberShop").collection("reviews")
   const orderCollection = client.db("BarberShop").collection("orders")
+  const adminCollection = client.db("BarberShop").collection("admins")
 
   app.post("/addService", (req, res) => {
     const service = req.body;
@@ -86,6 +87,29 @@ client.connect((err) => {
       res.send(newOrder);
     });
   });
+
+  app.post("/books", (req, res) => {
+    const newAdmin = req.body;
+    adminCollection.find(req.body)
+    .toArray((err, documents) =>{
+      res.send(documents)
+    })
+  });
+  app.post("/admin", (req, res) => {
+    const newAdmin = req.body;
+    console.log("add newAdmin", newAdmin);
+    adminCollection.insertOne(newAdmin).then((result) => {
+      console.log("inserted count", result.insertedCount);
+      res.send(result.insertedCount > 0);
+    });
+  });
+
+  app.post('/isAdmin',(req,res) =>{
+    adminCollection.find(req.body)
+    .toArray((err, documents) =>{
+      res.send(documents.length> 0)
+    })
+  })
   
 });
 
