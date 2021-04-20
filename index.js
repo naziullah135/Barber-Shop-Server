@@ -113,6 +113,11 @@ client.connect((err) => {
     });
   });
 });
+app.get("/list", (req, res) => {
+  orderCollection.find().toArray((err, newOrder) => {
+    res.send(newOrder);
+  });
+});
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
